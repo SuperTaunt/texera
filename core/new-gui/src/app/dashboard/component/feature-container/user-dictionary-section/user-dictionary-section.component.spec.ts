@@ -18,11 +18,30 @@ import { FormsModule } from '@angular/forms';
 import { UserDictionary } from '../../../type/user-dictionary';
 
 import { HttpModule } from '@angular/http';
-// import { NgbdModalAddProjectComponent } from '../saved-project-section/saved-project-section.component';
+import { NgbdModalAddProjectComponent } from '../saved-project-section/saved-project-section.component';
 
 describe('UserDictionarySectionComponent', () => {
   let component: UserDictionarySectionComponent;
   let fixture: ComponentFixture<UserDictionarySectionComponent>;
+
+  const TestCase: UserDictionary[] = [
+    {
+      id: '1',
+      name: 'gun control',
+      items: ['gun', 'shooting'],
+      description: 'This dictionary attribute to documenting the gun control records.'
+    },
+    {
+      id: '2',
+      name: 'police violence',
+      items: ['BLM', 'police']
+    },
+    {
+      id: '3',
+      name: 'immigration policy',
+      items: ['trump', 'daca', 'wall', 'mexico']
+    }
+  ];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

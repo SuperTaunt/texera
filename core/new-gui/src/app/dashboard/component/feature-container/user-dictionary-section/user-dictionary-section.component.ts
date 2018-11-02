@@ -24,12 +24,8 @@ import { cloneDeep } from 'lodash';
 })
 export class UserDictionarySectionComponent implements OnInit {
 
-  public UserDictionary: UserDictionary[] = [];
+  constructor(  ) { }
 
-  constructor(
-  ) { }
-
-  ngOnInit() {
-  }
+  ngOnInit() {  }
 
 }
