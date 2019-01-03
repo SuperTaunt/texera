@@ -152,6 +152,16 @@ export class JointUIService {
     return jointLinkCell;
   }
 
+  public static getJointSuggestLinkCell(
+    link: OperatorLink, operator1: OperatorPredicate, operator2: OperatorPredicate
+    ): joint.dia.Link {
+    const jointLinkCell = JointUIService.getSuggestLinkCell();
+    jointLinkCell.set('source', { id: operator1.operatorID, port: operator1.inputPorts });
+    jointLinkCell.set('target', { id: operator2.operatorID, port: operator2.outputPorts });
+    jointLinkCell.set('id', link.linkID);
+    return jointLinkCell;
+  }
+
   /**
    * This function will creates a custom JointJS link cell using
    *  custom attributes / styles to display the operator.
@@ -171,6 +181,42 @@ export class JointUIService {
    * @returns JointJS Link
    */
   public static getDefaultLinkCell(): joint.dia.Link {
+    const link = new joint.dia.Link({
+      attrs: {
+        '.connection-wrap': {
+          'stroke-width': 0
+        },
+        '.marker-source': {
+          d: sourceOperatorHandle,
+          stroke: 'none',
+          fill: '#919191'
+        },
+        '.marker-arrowhead-group-source .marker-arrowhead': {
+          d: sourceOperatorHandle,
+        },
+        '.marker-target': {
+          d: targetOperatorHandle,
+          stroke: 'none',
+          fill: '#919191'
+        },
+        '.marker-arrowhead-group-target .marker-arrowhead': {
+          d: targetOperatorHandle,
+        },
+        '.tool-remove': {
+          fill: '#D8656A',
+          width: 24
+        },
+        '.tool-remove path': {
+          d: deleteButtonPath,
+        },
+        '.tool-remove circle': {
+        }
+      }
+    });
+    return link;
+  }
+
+  public static getSuggestLinkCell(): joint.dia.Link {
     const link = new joint.dia.Link({
       attrs: {
         '.connection-wrap': {

@@ -1,5 +1,6 @@
 import { Point } from './../../types/workflow-common.interface';
 import { WorkflowActionService } from './../workflow-graph/model/workflow-action.service';
+import { WorkflowGraphReadonly } from './../workflow-graph/model/workflow-graph';
 import { Observable } from 'rxjs/Observable';
 import { WorkflowUtilService } from './../workflow-graph/util/workflow-util.service';
 import { JointUIService } from './../joint-ui/joint-ui.service';
@@ -64,7 +65,8 @@ export class DragDropService {
   constructor(
     private jointUIService: JointUIService,
     private workflowUtilService: WorkflowUtilService,
-    private workflowActionService: WorkflowActionService
+    private workflowActionService: WorkflowActionService,
+    private workflowGraph: WorkflowGraphReadonly
   ) {
     this.handleOperatorDropEvent();
   }
@@ -162,6 +164,13 @@ export class DragDropService {
     // create an operator and get the UI element from the operator type
     const operator = this.workflowUtilService.getNewOperatorPredicate(operatorType);
     const operatorUIElement = this.jointUIService.getJointOperatorElement(operator, { x: 0, y: 0 });
+
+    // create a link if there's an operator available
+    const operator_list = this.workflowGraph.getAllOperators();
+    if (operator_list.length > 1) {
+      const link = this.jointUIService.getSuggestLinkCell(operator, operator_list[0]);
+      const linkUIElement = this.jointUIService.getJointSuggestLinkCell(link, operator, operator_list[0]);
+    }
 
     // create the jointjs model and paper of the ghost element
     const tempGhostModel = new joint.dia.Graph();
